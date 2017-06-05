@@ -1,17 +1,13 @@
-FROM php:7.1-fpm
+FROM php:7.1-fpm-alpine
 
 MAINTAINER Celerative <bruno.cascio@celerative>
 
 # Deps
-RUN apt-get update -y && apt-get install -y \
+RUN apk add --no-cache \
 	nginx \
   curl \
   git \
 	supervisor \
-	# clean apt
-	&& apt-get autoremove -y \
-	&& apt-get clean \
-  && rm -rf /var/lib/apt/lists/* \
 	# redirect nginx output to stdio
 	&& ln -sf /dev/stdout /var/log/nginx/access.log \
 	&& ln -sf /dev/stderr /var/log/nginx/error.log
@@ -25,6 +21,6 @@ COPY ./configs/vhost.conf /etc/nginx/sites-enabled/default
 # fpm config
 COPY ./configs/fpm.conf /etc/php-fpm.conf
 
-CMD ["/usr/bin/supervisord"]
+CMD ["supervisord", "--nodaemon", "--configuration", "/etc/supervisor/conf.d/supervisord.conf"]
 
 EXPOSE 80 443
