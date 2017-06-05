@@ -9,6 +9,6 @@ Pull the image:
 
 or Alpine version
 
-`docker pull celerative/nginx-php-fpm:7.1-fpm-alpine
+`docker pull celerative/nginx-php-fpm:7.1-fpm-alpine`
 
 Repository: https://github.com/celerative/nginx-php-fpm
